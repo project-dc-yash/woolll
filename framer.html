@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Dashboard | Wool Supply</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0c1015;
+            --card: #1e252e;
+            --accent: #7c5dfa;
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); height: 100vh; overflow: hidden; }
+
+        /* --- THE TWO PLANE LAYOUT --- */
+        .main-wrapper {
+            display: grid;
+            grid-template-columns: 350px 1fr; /* Left Plane Fixed, Right Plane expands */
+            height: 100vh;
+        }
+
+        /* --- LEFT PLANE: FARMER PROFILE --- */
+        .left-plane {
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .farmer-img {
+            width: 150px; height: 150px; border-radius: 50%;
+            border: 4px solid var(--accent);
+            margin-bottom: 20px; object-fit: cover;
+        }
+
+        .farmer-info h2 { font-size: 1.5rem; margin-bottom: 10px; }
+        .farmer-info p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
+        
+        .stats {
+            margin-top: 30px; width: 100%;
+            background: rgba(255,255,255,0.03);
+            padding: 20px; border-radius: 20px;
+        }
+        .stat-item { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.8rem; }
+        .stat-item span { color: var(--text-dim); }
+
+        /* --- RIGHT PLANE: PRODUCT GRID --- */
+        .right-plane {
+            padding: 40px;
+            overflow-y: scroll; /* Scroll products only */
+        }
+
+        .section-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .product-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+        .p-img-box { height: 160px; width: 100%; overflow: hidden; position: relative; }
+        .p-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .p-price { position: absolute; top: 10px; right: 10px; background: var(--accent); color: white; padding: 4px 10px; border-radius: 8px; font-weight: bold; font-size: 0.8rem; }
+
+        .p-info { padding: 15px; }
+        .p-info h3 { font-size: 1rem; margin-bottom: 5px; }
+        .p-info p { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 15px; }
+
+        .order-btn {
+            width: 100%; background: transparent; color: var(--accent);
+            border: 1px solid var(--accent); padding: 10px; border-radius: 10px;
+            font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
+        .order-btn:hover { background: var(--accent); color: white; }
+
+        /* Scrollbar Styling */
+        .right-plane::-webkit-scrollbar { width: 6px; }
+        .right-plane::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        
+        <div class="left-plane">
+            <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400" class="farmer-img">
+            <div class="farmer-info">
+                <h2>John Doe</h2>
+                <p>Organic Wool Farmer<br>Verified Since 2022</p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item"><span>Total Supply</span><b>450kg</b></div>
+                <div class="stat-item"><span>Rating</span><b>⭐ 4.9</b></div>
+                <div class="stat-item"><span>Location</span><b>Australia</b></div>
+            </div>
+
+            <button style="margin-top: auto; background: none; border: 1px solid var(--border); color: var(--text-dim); padding: 10px 20px; border-radius: 10px; cursor: pointer;">Settings</button>
+        </div>
+
+        <div class="right-plane">
+            <div class="section-header">
+                <h1>Current Inventory</h1>
+                <p style="color: var(--text-dim);">10 Products Available</p>
+            </div>
+
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="p-img-box">
+                        <img src="https://i.etsystatic.com/5251007/r/il/2dcd47/1524688513/il_fullxfull.1524688513_j6o3.jpg">
+                        <div class="p-price">RS 80.50</div>
+                    </div>
+                    <div class="p-info">
+                        <h3>Wool Tops</h3>
+                        <p>Cleaned and combed fibers ready for spinning.</p>
+                        <button class="order-btn" onclick="goToBooking('Wool Tops', '80.50', 'https://i.etsystatic.com/5251007/r/il/2dcd47/1524688513/il_fullxfull.1524688513_j6o3.jpg')">Book Now</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="p-img-box">
+                        <img src="https://m.media-amazon.com/images/I/61k+3gBz3ZL._AC_UF894,1000_QL80_.jpg">
+                        <div class="p-price">RS 100.00</div>
+                    </div>
+                    <div class="p-info">
+                        <h3>Raw Noils</h3>
+                        <p>Short fibers byproduct for industrial stuffing.</p>
+                        <button class="order-btn" onclick="goToBooking('Raw Noils', '100.00', 'https://m.media-amazon.com/images/I/61k+3gBz3ZL._AC_UF894,1000_QL80_.jpg')">Book Now</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="p-img-box">
+                        <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/3f7f6cca-b213-4479-a0d3-1d0a8bcfd31f.__CR0,0,970,600_PT0_SX970_V1___.jpg">
+                        <div class="p-price">RS 600.00</div>
+                    </div>
+                    <div class="p-info">
+                        <h3>Luxury Shawl</h3>
+                        <p>Finished farmer-handcrafted accessories.</p>
+                        <button class="order-btn" onclick="goToBooking('Luxury Shawl', '600.00', 'https://m.media-amazon.com/images/S/aplus-media-library-service-media/3f7f6cca-b213-4479-a0d3-1d0a8bcfd31f.__CR0,0,970,600_PT0_SX970_V1___.jpg')">Book Now</button>
+                    </div>
+                </div>
+
+                </div>
+        </div>
+
+    </div>
+
+    <script>
+        function goToBooking(name, price, img) {
+            window.location.href = `My Bookings.html?name=${encodeURIComponent(name)}&price=${price}&img=${encodeURIComponent(img)}`;
+        }
+    </script>
+</body>
+</html>

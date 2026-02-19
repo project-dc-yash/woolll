@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium User Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --accent: #22d3ee;
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.15) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* --- Sidebar Navigation --- */
+        nav {
+            width: 280px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 40px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .nav-link {
+            padding: 15px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #94a3b8;
+            font-weight: 600;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: white;
+            box-shadow: inset 0 0 10px rgba(99, 102, 241, 0.2);
+        }
+
+        /* --- Main Content --- */
+        main {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        /* --- Product Grid --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: slideUp 0.6s ease-out forwards;
+        }
+
+        .card:hover {
+            transform: translateY(-12px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(45deg, #1e293b, #334155);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .status {
+            font-size: 0.75rem;
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .status-booking { background: rgba(34, 211, 238, 0.1); color: var(--accent); }
+        .status-delivery { background: rgba(168, 85, 247, 0.1); color: var(--secondary); }
+
+        .price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 15px 0;
+            color: white;
+        }
+
+        .btn-order {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-order:hover {
+            filter: brightness(1.2);
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+        }
+
+        /* --- Animations --- */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+
+        
+        /* --- Grid --- */
+        .container { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
+
+        .card {
+            background: var(--card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); }
+
+        .img-box { height: 220px; position: relative; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .price-tag {
+            position: absolute; bottom: 15px; right: 15px;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
+            padding: 5px 12px; border-radius: 10px; font-weight: 700;
+        }
+
+        .info { padding: 20px; }
+        .info h3 { font-size: 1.1rem; margin-bottom: 8px; }
+        .info p { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 20px; height: 40px; }
+
+        .shop-btn {
+            width: 100%; background: var(--accent); color: white; border: none;
+            padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer;
+            transition: 0.3s;
+        }
+        .shop-btn:hover { filter: brightness(1.2); box-shadow: 0 0 20px rgba(124, 93, 250, 0.4); }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">GEMINI STUDIO</div>
+        <a href="#" class="nav-link">Dashboard</a>
+        <a href="Products.html" class="nav-link active">Products</a>
+        <a href="My Bookings.html" class="nav-link">My Bookings</a>
+        <a href="#" class="nav-link">Settings</a>
+        <div style="margin-top: auto;">
+            <a href="#" class="nav-link" style="color: #ef4444;">Logout</a>
+        </div>
+    </nav>
+
+    <main>
+        <header>
+            <div>
+                <h1>Exclusive Collection</h1>
+                <p style="color: #94a3b8;">Discover and book premium services</p>
+            </div>
+            <div style="text-align: right;">
+                <p>Welcome, <strong>Alex</strong></p>
+                <small style="color: var(--accent);">Gold Member</small>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="grid">
+                <div class="card">
+                      <!-- 1 -->
+                    <div class="img-box">
+                        <img src="https://i.etsystatic.com/5251007/r/il/2dcd47/1524688513/il_fullxfull.1524688513_j6o3.jpg">
+                        <div class="price-tag"> RS 80.50</div>
+                    </div>
+                    <div class="info">
+                        <h3>Wool Tops & Rovings:</h3>
+                        <p>Cleaned, combed, and carded wool fibers ready for spinning or felting.</p>
+                        <button class="shop-btn" onclick="goToBooking('Greasy Wool', '12.50', 'https://images.unsplash.com/photo-1583209814683-c023dd293cc6?w=400')">Shop Now</button>
+                    </div>
+                </div>
+        
+            <!-- 2 -->
+                <div class="card">
+                    <div class="img-box">
+                        <img src="https://m.media-amazon.com/images/I/61k+3gBz3ZL._AC_UF894,1000_QL80_.jpg">
+                        <div class="price-tag"> RS. 100</div>
+                    </div>
+                    <div class="info">
+                        <h3>Wool Tops & Noils</h3>
+                        <p>Fine combed fibers for worsted manufacturing.</p>
+                        <button class="shop-btn" onclick="goToBooking('Wool Tops', '45.00', 'https://images.unsplash.com/photo-1621434913220-410714b29f03?w=400')">Shop Now</button>
+                    </div>
+                </div>
+          <!-- 3 -->
+                <div class="card">
+                    <div class="img-box">
+                        <img src=" https://m.media-amazon.com/images/S/aplus-media-library-service-media/3f7f6cca-b213-4479-a0d3-1d0a8bcfd31f.__CR0,0,970,600_PT0_SX970_V1___.jpg">
+                        <div class="price-tag">RS. 600.50</div>
+                    </div>
+                    <div class="info">
+                        <h3>Accessories </h3>
+                        <p>Shawls, stoles, mufflers, and ponchos.</p>
+                        <button class="shop-btn" onclick="goToBooking('Greasy Wool', '12.50', 'https://images.unsplash.com/photo-1583209814683-c023dd293cc6?w=400')">Shop Now</button>
+                    </div>
+                </div>
+        
+                  <!-- 4 -->
+                <div class="card">
+                    <div class="img-box">
+                        <img src="https://media.istockphoto.com/id/1214170063/photo/colorful-warm-clothes-in-the-form-of-hats-gloves-and-mittens.jpg?s=1024x1024&w=is&k=20&c=EEj5ivIWmNWLapJ-OfX2BwwPmaRVuA2cXFqPRAHINP8=">
+                        <div class="price-tag"> RS 200.OO</div>
+                    </div>
+                    <div class="info">
+                        <h3>Greasy Wool Fleece</h3>
+                        <p>Clothing: Sweaters, cardigans, socks, hats, gloves, and thermal wear.</p>
+                        <button class="shop-btn" onclick="goToBooking('Greasy Wool', '12.50', 'https://images.unsplash.com/photo-1583209814683-c023dd293cc6?w=400')">Shop Now</button>
+                    </div>
+                </div>
+        
+                  <!-- 5 -->
+                <div class="card">
+                    <div class="img-box">
+                        <img src="https://www.self-build.co.uk/wp-content/uploads/2023/03/iStock-1224260881-CREDIT-Bilanol.webp">
+                        <div class="price-tag">$12.50</div>
+                    </div>
+                    <div class="info">
+                        <h2> Industrial & Specialized Products </h2>
+                        <h3> Building Materials: </h3>
+                        <p>Sustainable home insulation, soundproofing panels, and wool-reinforced bricks.</p>
+                        <button class="shop-btn" onclick="goToBooking('Greasy Wool', '12.50', 'https://images.unsplash.com/photo-1583209814683-c023dd293cc6?w=400')">Shop Now</button>
+                    </div>
+                </div>
+          <!-- 6 -->
+                <div class="card">
+                    <div class="img-box">
+                        <img src=" https://media.licdn.com/dms/image/v2/D5612AQFcgUPtrtR-EA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1696231788664?e=2147483647&v=beta&t=oM0d-aJGw0PiPPrpW1ls5fGQG8TMkzqr--FbxPWyRVU">
+                        <div class="price-tag">Rs 12.50</div>
+                    </div>
+                    <div class="info">
+                        <h3>Greasy Wool Fleece</h3>
+                        <p>Wool: Where Comfort Meets Style.</p>
+                        <button class="shop-btn" onclick="goToBooking('Greasy Wool', '12.50', 'https://images.unsplash.com/photo-1583209814683-c023dd293cc6?w=400')">Shop Now</button>
+                    </div>
+                </div>
+         <!-- 7 -->
+                <div class="card">
+                    <div class="img-box">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN2AGaJwXxgXxlYdP8K3H7uVSeNXMVR2xvvw&s">
+                        <div class="price-tag">Rs 52.50</div>
+                    </div>
+                    <div class="info">
+                        <h3>Greasy Wool Fleece</h3>
+                        <p>Wool .</p>
+                        <button class="shop-btn" onclick="goToBooking('Greasy Wool', '12.50', 'https://images.unsplash.com/photo-1583209814683-c023dd293cc6?w=400')">Shop Now</button>
+                    </div>
+                </div>
+         <!-- 8 -->
+                <div class="card">
+                    <div class="img-box">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcCHol5Qt0J-7dW2wgAve25J8ZpxH-6HitKQ&s">
+                        <div class="price-tag">Rs 92.50</div>
+                    </div>
+                    <div class="info">
+                        <h3>Merino wool</h3>
+                        <p>Merino wool comes from the Merino sheep, known for its softness and fineness.</p>
+                        <button class="shop-btn" onclick="goToBooking('Greasy Wool', '12.50', 'https://images.unsplash.com/photo-1583209814683-c023dd293cc6?w=400')">Shop Now</button>
+                    </div>
+                </div>
+        
+        
+                </div>
+        </div>
+        
+        </div>
+    </main>
+
+    
+<script>
+    function goToBooking(name, price, img) {
+        window.location.href = `My Bookings.html?name=${encodeURIComponent(name)}&price=${price}&img=${encodeURIComponent(img)}`;
+    }
+</script>
+
+</body>
+</html>
